@@ -70,13 +70,13 @@
             </v-dialog>
             <v-dialog v-model="adModal" max-width="290px" >
                 <v-card>
-                  <v-card-title class="headline" v-if="adAccion==1">¿Activar Producto?</v-card-title>
-                  <v-card-title class="headline" v-if="adAccion==2">¿Desactivar Producto?</v-card-title>
+                  <v-card-title class="headline" v-if="adAccion==1">¿Activar Usuario?</v-card-title>
+                  <v-card-title class="headline" v-if="adAccion==2">¿Desactivar Usuario?</v-card-title>
                   <v-card-text>
                     Estás a punto de
                     <span v-if="adAccion==1">Activar</span>
                     <span v-if="adAccion==2">desactivar</span>
-                    el item {{ adNombre }}
+                    al Usuario {{ adNombre }}
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -149,6 +149,7 @@ export default {
       email:'',
       password:'',
       actPassword:false,
+      passwordAnt:'',
       valida: 0,
       validaMensaje:[],
       adModal:0,
@@ -201,13 +202,16 @@ export default {
       },
 
       editItem(item) {
-          this.id=item.idarticulo;
-          this.idcategoria=item.idcategoria;
-          this.codigo=item.codigo;
+          this.id=item.idusuario;
+          this.idrol=item.idrol;
           this.nombre=item.nombre;
-          this.stock=item.stock;
-          this.precio_venta=item.precio_venta;
-          this.descripcion=item.descripcion;
+          this.tipo_documento=item.tipo_documento;
+          this.num_documento=item.num_documento;
+          this.direccion=item.direccion;
+          this.telefono=item.telefono;
+          this.email=item.email;
+          this.password=item.password_hash;
+          this.passwordAnt=item.password_hash;
           this.editedIndex = 1; 
           this.dialog = true
       },
@@ -229,6 +233,8 @@ export default {
           this.telefono=""; 
           this.email=""; 
           this.password=""; 
+          this.actPassword0="";
+          this.passwordAnt="";
           this.editedIndex=-1;
       },
 
@@ -239,14 +245,21 @@ export default {
             if (this.editedIndex > -1) {
                //codigo para editar
                let me =this;
-                axios.put('api/Articulos/Actualizar',{
-                  'idarticulo':me.id,
-                  'idcategoria' : me.idcategoria,
-                  'codigo': me.codigo,
+               if(me.password!=me.passwordAnt){
+                 me.actPassword=true;
+               }
+
+                axios.put('api/Usuarios/Actualizar',{
+                  'idusuario':me.id,
+                  'idrol' : me.idrol,
                   'nombre': me.nombre,
-                  'stock':me.stock,
-                  'precio_venta': me.precio_venta,
-                  'descripcion' : me.descripcion
+                  'tipo_documento': me.tipo_documento,
+                  'num_documento':me.num_documento,
+                  'direccion': me.direccion,
+                  'telefono' : me.telefono,
+                  'email' : me.email,
+                  'password' : me.password,
+                  'act_password': me.actPassword
                 }).then(function(response){
                     me.close();
                     me.listar();
@@ -306,7 +319,7 @@ export default {
 
         this.adModal=1;
         this.adNombre=item.nombre;
-        this.adId=item.idarticulo;
+        this.adId=item.idusuario;
 
         if(accion==1){
           this.adAccion=1;
@@ -320,7 +333,7 @@ export default {
 
        activar(){
                let me = this;
-                  axios.put('api/Articulos/Activar/'+this.adId,{}).then(function(response) {
+                  axios.put('api/Usuarios/Activar/'+this.adId,{}).then(function(response) {
                     me.adModal = 0;
                     me.adAccion = 0;
                     me.adNombre = ""                  ;
@@ -334,7 +347,7 @@ export default {
             },
             desactivar(){
                let me = this;
-                  axios.put('api/Articulos/Desactivar/'+this.adId,{}).then(function(response) {
+                  axios.put('api/Usuarios/Desactivar/'+this.adId,{}).then(function(response) {
                     me.adModal = 0;
                     me.adAccion = 0;
                     me.adNombre = "";
