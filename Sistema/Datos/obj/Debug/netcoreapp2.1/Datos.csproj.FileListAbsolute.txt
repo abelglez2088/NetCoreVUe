@@ -1,0 +1,9 @@
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\bin\Debug\netcoreapp2.1\Datos.deps.json
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\bin\Debug\netcoreapp2.1\Datos.dll
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\bin\Debug\netcoreapp2.1\Datos.pdb
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.csprojAssemblyReference.cache
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.csproj.CoreCompileInputs.cache
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.AssemblyInfoInputs.cache
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.AssemblyInfo.cs
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.dll
+C:\Users\abgonzalez\Documents\c#\Sistema\Datos\obj\Debug\netcoreapp2.1\Datos.pdb
