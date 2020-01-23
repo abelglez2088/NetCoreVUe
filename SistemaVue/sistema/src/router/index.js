@@ -5,6 +5,8 @@ import Categoria from '../components/Categoria.vue'
 import Articulo from '../components/Articulo.vue'
 import Rol from '../components/Rol.vue'
 import Usuario from '../components/Usuario.vue'
+import Cliente from '../components/Clientes.vue'
+
 
 Vue.use(VueRouter)
 
@@ -34,7 +36,13 @@ const routes = [
     path: './usuarios',
     name: 'usuarios',
     component: Usuario
+  },
+  {
+    path: './clientes',
+    name: 'clientes',
+    component: cliente
   }
+
 
   
 ]
