@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sistema.Entidades.Ventas
+
+namespace Sistema.Web.Models.Ventas.Persona
 {
-     public class Persona
+    public class CrearViewModel
     {
-        public int idpersona { get; set; }
+
+      
         [Required]
         public string tipo_persona { get; set; }
         [Required]
