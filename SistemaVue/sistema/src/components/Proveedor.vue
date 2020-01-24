@@ -3,7 +3,7 @@
     <v-flex>
       <v-data-table
       :headers="headers" 
-      :items="clientes" 
+      :items="proveedores" 
       :search="search"
        class="elevation-1">
         <template v-slot:top>
@@ -77,7 +77,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      clientes:[],  
+      proveedores:[],  
       dialog: false,
       headers: [
         { text: "Opciones", value: "opciones", sortable: false },
@@ -111,7 +111,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Nuevo cliente" : "Actualizar Cliente";
+      return this.editedIndex === -1 ? "Nuevo Proveedor" : "Actualizar Proveedor";
     }
   },
 
@@ -129,7 +129,7 @@ export default {
   methods: {
       listar(){
         let me=this;
-          axios.get('api/Personas/ListarClientes').then(function(response){
+          axios.get('api/Personas/ListarProveedor').then(function(response){
               //console.log(response);
               me.clientes=response.data;
           }).catch(function(error){
@@ -175,7 +175,7 @@ export default {
                let me =this;
                   axios.put('api/Personas/Actualizar',{
                   'idpersona':me.id,
-                  'tipo_persona':'Cliente',
+                  'tipo_persona':'Proveedor',
                   'nombre': me.nombre,
                   'tipo_documento': me.tipo_documento,
                   'num_documento':me.num_documento,
@@ -195,7 +195,7 @@ export default {
                 let me =this;
                 axios.post('api/personas/Crear',{
                   'idpersona':me.id,
-                  'tipo_persona':'Cliente',
+                  'tipo_persona':'Proveedor',
                   'nombre': me.nombre,
                   'tipo_documento': me.tipo_documento,
                   'num_documento':me.num_documento,

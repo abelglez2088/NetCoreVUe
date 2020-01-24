@@ -42,10 +42,10 @@ namespace Sistema.Web.Controllers
             });
 
         }
-
+        [HttpGet("[action]")]
         public async Task<IEnumerable<PersonaViewModel>> ListarProveedor()
         {
-            var persona = await _context.Personas.Where(p => p.tipo_persona == "Proveedor").ToListAsync();
+            var persona = await _context.Personas.Where(p => p.tipo_persona == "Cliente").ToListAsync();
 
             return persona.Select(p => new PersonaViewModel
             {
@@ -128,7 +128,7 @@ namespace Sistema.Web.Controllers
             persona.direccion = model.direccion;
             persona.telefono = model.telefono;
             persona.email = model.email.ToLower();
-            try
+              try
             {
                 await _context.SaveChangesAsync();
             }

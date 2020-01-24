@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Sistema.Web.Models.Ventas.Persona
 {
-    public class PersonaViewmodel
+    public class PersonaViewModel
     {
         public int idpersona { get; set; }
         public string tipo_persona { get; set; }
