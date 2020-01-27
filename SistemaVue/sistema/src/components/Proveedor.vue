@@ -131,7 +131,7 @@ export default {
         let me=this;
           axios.get('api/Personas/ListarProveedor').then(function(response){
               //console.log(response);
-              me.clientes=response.data;
+              me.proveedores=response.data;
           }).catch(function(error){
               console.log(error);
           });

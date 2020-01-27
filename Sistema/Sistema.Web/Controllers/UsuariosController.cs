@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Sistema.Datos;
 using Sistema.Entidades.Usuarios;
 using Sistema.Web.Models.Usuarios.Usuario;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Sistema.Web.Controllers
 {
@@ -16,10 +21,12 @@ namespace Sistema.Web.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly DbContextSistema _context;
+        private readonly IConfiguration _config;
 
-        public UsuariosController(DbContextSistema context)
+        public UsuariosController(DbContextSistema context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         // GET: api/Usuarios/Listar
@@ -206,9 +213,66 @@ namespace Sistema.Web.Controllers
             }
         }
 
-       private bool UsuarioExists(int id)
+
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            return _context.Usuarios.Any(e => e.idusuario == id);
+            var email = model.email.ToLower();
+
+            var usuario = await _context.Usuarios.Where(u=>u.condicion==true).Include(u => u.rol).FirstOrDefaultAsync(u => u.email == email);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            if (!VerificarPasswordHash(model.password, usuario.password_hash, usuario.password_salt))
+            {
+                return NotFound();
+            }
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.idusuario.ToString()),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, usuario.rol.nombre),
+                new Claim("idusuario",usuario.idusuario.ToString()),
+                new Claim("rol", usuario.nombre),
+                new Claim("nombre", usuario.nombre)
+            };
+            return Ok(
+                    new { token= GenerarToken(claims)}
+                );
         }
+
+
+
+        private bool VerificarPasswordHash(string password, byte[] passwordHashAlmacenado, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var passwordHashNuevo = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return new ReadOnlySpan<byte>(passwordHashAlmacenado).SequenceEqual(new ReadOnlySpan<byte>(passwordHashNuevo));
+            }
+        }
+
+        private string GenerarToken(List<Claim> claims)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                 _config["Jwt:Issuer"],
+                 expires: DateTime.Now.AddMinutes(30),
+                 signingCredentials: creds,
+                 claims:claims
+                );
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private bool UsuarioExists(int id)
+            {
+                return _context.Usuarios.Any(e => e.idusuario == id);
+            }
     }
 }

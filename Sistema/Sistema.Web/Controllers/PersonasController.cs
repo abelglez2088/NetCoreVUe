@@ -45,7 +45,7 @@ namespace Sistema.Web.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable<PersonaViewModel>> ListarProveedor()
         {
-            var persona = await _context.Personas.Where(p => p.tipo_persona == "Cliente").ToListAsync();
+            var persona = await _context.Personas.Where(p => p.tipo_persona == "Proveedor").ToListAsync();
 
             return persona.Select(p => new PersonaViewModel
             {
