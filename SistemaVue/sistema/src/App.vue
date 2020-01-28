@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
       <v-list dense>
        <template>
-         <v-list-item :to="{name: 'home'}">
+         <v-list-item :to="{name: 'login'}">
          <v-list-item-action>
            <v-icon>home</v-icon>
          </v-list-item-action>

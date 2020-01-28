@@ -7,7 +7,7 @@ import Rol from '../components/Rol.vue'
 import Usuario from '../components/Usuario.vue'
 import Cliente from '../components/Cliente.vue'
 import Proveedor from '../components/Proveedor.vue'
-
+import Login from '../components/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +47,11 @@ const routes = [
     path: './proveedores',
     name: 'proveedores',
     component: Proveedor
+  },
+  {
+    path: './login',
+    name: 'login',
+    component: Login
   }
 
 ]
