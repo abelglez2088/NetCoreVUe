@@ -246,7 +246,7 @@ export default {
     }
 
   },
-  created:{
+  created(){
     this.$store.dispatch("autoLogin");
   },
   methods:{

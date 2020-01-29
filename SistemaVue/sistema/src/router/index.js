@@ -8,7 +8,7 @@ import Usuario from '../components/Usuario.vue'
 import Cliente from '../components/Cliente.vue'
 import Proveedor from '../components/Proveedor.vue'
 import Login from '../components/Login.vue'
-import store from './store'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -97,6 +97,7 @@ var router = new Router({
   base: process.env.BASE_URL,
   routes
 })
+
 
 router.beforeEach((to,from,next)=>{
 if(to.matched.some(record=> record.meta.libre)){
