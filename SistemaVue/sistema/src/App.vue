@@ -1,8 +1,13 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
+    <v-navigation-drawer 
+      v-model="drawer" 
+      :clipped="$vuetify.breakpoint.lgAndUp" 
+      app
+      v-if="logueado"  
+    >
       <v-list dense>
-       <template>
+       <template v-if="esAdministrador || esAlmacenista || esVendedor">
          <v-list-item :to="{name: 'login'}">
          <v-list-item-action>
            <v-icon>home</v-icon>
@@ -11,7 +16,7 @@
          </v-list-item>
        </template>
 
-       <template>
+       <template v-if="esAdministrador || esAlmacenista">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -44,7 +49,7 @@
          </v-list-group>
        </template>
 
-        <template>
+        <template v-if="esAdministrador || esAlmacenista">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -77,7 +82,7 @@
           </v-list-group>
        </template>
 
-        <template>
+        <template v-if="esAdministrador || esVendedor">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -111,7 +116,7 @@
                  </v-list-group>
        </template>
 
-        <template>
+        <template v-if="esAdministrador">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -144,7 +149,7 @@
          </v-list-group>
        </template>
 
-       <template>
+       <template v-if="esAdministrador ">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -225,6 +230,27 @@ export default {
     return {
       drawer: null,
     }
+  },
+  computed:{
+    logueado(){
+      return this.$store.state.usuario;
+    },
+    esAdministrador(){
+      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Administrador';
+    },
+    esAlmacenista(){
+      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Almacenista';
+    },
+    esVendedor(){
+      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Vendedor';
+    }
+
+  },
+  created:{
+    this.$store.dispatch("autoLogin");
+  },
+  methods:{
+
   }
 }
 </script>
