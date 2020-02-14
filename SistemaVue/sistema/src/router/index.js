@@ -21,6 +21,7 @@ const routes = [
       administrador :true,
       almacenista: true,
       vendedor:true
+    
     }
   },
   {

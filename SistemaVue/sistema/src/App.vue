@@ -234,17 +234,17 @@ export default {
   },
   computed :{
     logueado(){
-      return this.$store.satate.usuario;
+      return this.$store.state.usuario;
     },
     esAdministrador(){
-      return this.$store.satate.usuario && this.$store.state.usuario.rol=='Administrador';
+      return this.$store.state.usuario && this.$store.state.usuario.rol=='Administrador';
     },
     esAlmacenista(){
-      return this.$store.satate.usuario && this.$store.state.usuario.rol=='Almacenista';
+      return this.$store.state.usuario && this.$store.state.usuario.rol=='Almacenista';
 
     },
     esVendedor(){
-            return this.$store.satate.usuario && this.$store.state.usuario.rol=='Vendedor';
+            return this.$store.state.usuario && this.$store.state.usuario.rol=='Vendedor';
 
     }
   },
