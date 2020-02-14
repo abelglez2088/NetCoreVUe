@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import decode from 'jwt-decode'
-import router from '../router/index'
-
+import router from  '../store/index'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token:null,
-    usuario:null
+    token: null,
+    usuario : null
   },
   mutations: {
     setToken(state,token){
@@ -21,23 +20,24 @@ export default new Vuex.Store({
   actions: {
     guardarToken({commit},token){
       commit("setToken",token)
-      commit("setUsuario",decode(token))
+      commit("setUsuario", decode(token))
       localStorage.setItem("token",token)
     },
     autoLogin({commit}){
       let token = localStorage.getItem("token")
       if(token){
         commit("setToken",token)
-        commit("setUsuario",decode(token))
+        commit("setUsuario", decode(token))
       }
-      router.push({name:'home'})
+      router.push({name: 'Home'})
     },
     salir({commit}){
       commit("setToken",null)
       commit("setUsuario",null)
       localStorage.removeItem("token")
-      router.push({name:'login'})
+      router.push({name: 'login'})
     }
+
   },
   modules: {
   }

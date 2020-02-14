@@ -1,11 +1,12 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer 
-      v-model="drawer" 
-      :clipped="$vuetify.breakpoint.lgAndUp" 
-      app
-      v-if="logueado"  
-    >
+    <v-navigation-drawer
+    fixed
+    :clipped="$vuetify.breakpoint.lgAndUp" 
+     app
+     v-model="drawer" 
+     v-if="logueado"
+     >
       <v-list dense>
        <template v-if="esAdministrador || esAlmacenista || esVendedor">
          <v-list-item :to="{name: 'login'}">
@@ -149,7 +150,7 @@
          </v-list-group>
        </template>
 
-       <template v-if="esAdministrador ">
+       <template v-if="esAdministrador">
          <v-list-group>
            <v-list-item slot="activator">
             <v-list-item-content>
@@ -231,20 +232,21 @@ export default {
       drawer: null,
     }
   },
-  computed:{
+  computed :{
     logueado(){
-      return this.$store.state.usuario;
+      return this.$store.satate.usuario;
     },
     esAdministrador(){
-      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Administrador';
+      return this.$store.satate.usuario && this.$store.state.usuario.rol=='Administrador';
     },
     esAlmacenista(){
-      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Almacenista';
+      return this.$store.satate.usuario && this.$store.state.usuario.rol=='Almacenista';
+
     },
     esVendedor(){
-      this.$$store.satate.usuario && this.$store.state.usuario.rol=='Vendedor';
-    }
+            return this.$store.satate.usuario && this.$store.state.usuario.rol=='Vendedor';
 
+    }
   },
   created(){
     this.$store.dispatch("autoLogin");
